@@ -1,0 +1,129 @@
+[project]
+name = "kapita"
+dynamic = [
+    "version"
+]
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Alexander Lavrov", email = "internal@egnod.dev" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    # LOGS
+    "logfire==3.9.0",
+    # SETTINGS
+    "pydantic[email]==2.10.6",
+    "pydantic-settings==2.8.1",
+    # TELEGRAM
+    "aiogram==3.18.0",
+    # DATABASE
+    "sqlalchemy[asyncio,mypy,postgresql-psycopg]==2.0.39",
+    "alembic[tz]==1.15.1",
+    "httpx[http2]==0.28.1",
+    "iso4217==1.12.20240625",
+    "defusedxml==0.7.1",
+    "apscheduler==3.11.0",
+]
+
+[project.optional-dependencies]
+tests = [
+    "pytest==8.3.5",
+    "pytest-mock==3.14.0",
+    "pytest-cov==6.0.0",
+    "pytest-asyncio==0.25.3",
+    "coverage==7.6.12",
+    "pytest-mypy==0.10.3"
+]
+
+[project.scripts]
+bot = "kapita.bot.__main__:start"
+
+[tool.hatch.version]
+path = "kapita/__about__.py"
+
+[tool.pytest.ini_options]
+addopts = "-W ignore::DeprecationWarning tests/"
+
+[tool.isort]
+known_first_party = "kapita"
+line_length = 120
+profile = "ruff"
+multi_line_output = 3
+include_trailing_comma = true
+use_parentheses = true
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+target-version = "py313"
+
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint]
+select = ["B", "C", "E", "F", "W", "B9"]
+ignore = [
+  "COM812", "ISC001", "E711", "E731", "B008"
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402", "F401"]
+"**/{tests,docs,tools}/*" = ["E402"]
+"**/{migrations}/*" = ["ALL"]
+
+[tool.pycln]
+all = true
+
+[tool.mypy]
+python_version = "3.13"
+ignore_missing_imports = true
+no_site_packages = true
+strict_optional = false
+strict = true
+allow_subclassing_any = true
+allow_untyped_calls = true
+pretty = true
+show_error_codes = true
+implicit_reexport = true
+allow_untyped_decorators = true
+warn_return_any = false
+disable_error_code = ["valid-type", "call-arg"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

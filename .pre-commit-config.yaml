@@ -1,0 +1,66 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.0
+    hooks:
+      - id: ruff
+        args: [ --fix ]
+      - id: ruff-format
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.19.1
+    hooks:
+    -   id: pyupgrade
+
+  - hooks:
+      - args:
+          - --settings-path
+          - pyproject.toml
+          - --profile
+          - black
+          - --filter-files
+          - --magic-placement
+          - -b
+          - kapita
+        id: isort
+    repo: https://github.com/pycqa/isort
+    rev: 6.0.1
+  
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.15.0
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - sqlalchemy[asyncio,mypy]
+          - pydantic[dotenv,email]
+          - pytest
+          - orjson
+          - lxml
+        args:
+          - --config-file
+          - pyproject.toml
+          - --sqlite-cache
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: '1.8.3'
+    hooks:
+    - id: bandit
+      args:
+        - -c
+        - pyproject.toml
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-toml
+      - id: check-yaml
+        args:
+          - --allow-multiple-documents
+      - id: check-json
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        files: "\\.(py|txt|yaml|json|md|toml|lock|cfg|html|sh|js|yml)$"
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-byte-order-marker
+      - id: check-executables-have-shebangs

@@ -1,0 +1,20 @@
+[common]
+environment = "development"
+
+[logging]
+level = "INFO"
+
+[infra]
+[infra.database]
+uri = "postgresql+psycopg://kapita:kapita@localhost:5432/kapita"
+
+[infra.telegram]
+api_id = 10000000
+api_hash = ""
+bot_token = "000000000:AAAAAAAAA-BBBBBBBBB"
+
+[infra.logfire]
+token = "AAAAAAAAAAAAAAA"
+
+[infra.alphavantage]
+token = "AAAAAAAAAAAAAAA"
